@@ -32,6 +32,9 @@ public class Cliente {
     }
 
     public int getTaquilla() {
+        if ((edad<18)&&(edad>0)){
+            taquilla=taquilla-2000;
+        }
         return taquilla;
     }
 

@@ -6,7 +6,9 @@ public class MenuPrincipal {
     byte columnas;
     int contador;
     byte tipo=1;
+    int taquilla=0;
     int tipoG;
+    boolean disponible=false;
     int tipoE;
     int tipoP;
     Silla[][] arraySilla;
@@ -19,11 +21,13 @@ public class MenuPrincipal {
        imprimirSala();
        definirTipoSillas();
        definirMatrizSillas();
+       InformacionPelicula();
+       IngresarClientes();
       }
     private void generarSala(){
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                    arraySilla[i][j] = new Silla(contador++,null,tipo);                    
+                    arraySilla[i][j] = new Silla(contador++,null,tipo,"VACIO");                    
             } 
         }
     } 
@@ -44,20 +48,89 @@ public class MenuPrincipal {
         tipoE=sc.nextInt();
     }
     private void definirMatrizSillas(){
-        byte g=1;
-        int aux;
-        int aux2;
         for (int i=0;i<tipoG;i++){
             for (int j=0;j<columnas;j++){
-                arraySilla[i][j].setTipo(g);
+                arraySilla[i][j].setTipo(tipo);
             }
         }
-        aux=tipoG+tipoE;
-        g++;
-        for (int i=g;i<aux;i++){
+        tipo=2;
+        for (int i=tipoG;i<tipoG+tipoP;i++){
             for (int j=0;j<columnas;j++){
-                arraySilla[i][j].setTipo(g);
+                arraySilla[i][j].setTipo(tipo);
             }
+        }
+        tipo=3;
+        for (int i=tipoG+tipoP;i<tipoG+tipoP+tipoE;i++){
+            for (int j=0;j<columnas;j++){
+                arraySilla[i][j].setTipo(tipo);
+            }
+        }
+    }
+    private void InformacionPelicula(){
+        Pelicula pelicula= new Pelicula("COMEDIA","2013","","Mi VILLANO FAVORITO 2","120 MINUTOS... 2 HORAS");
+        System.out.println("LA PELICULA DEL DIA DE HOY ES:");
+        System.out.println(pelicula.getTitulo());
+        System.out.println(pelicula.getGenero());
+        System.out.println(pelicula.getAño());
+        System.out.println(pelicula.getDuracion());
+    }
+    private void IngresarClientes(){
+        byte ingresarUsuario;
+        System.out.println("DESEA COMPRAR BOLETA?"+"SI LO DESEA INGRESE 1");
+        while (true){
+            ingresarUsuario= sc.nextByte();
+            if (ingresarUsuario==1){
+                silla();
+                if (disponible==false){
+                    System.out.println("ERROR INGRESE OTRA UBICACION ES POSIBLE QUE LA SILLA QUE USTED SOLICITO NO EXISTA O NO ESTE DISPONIBLE");
+                    System.out.println("SE LE MOSTRARA LA SALA CON EL ESTADO ACTUAL DE LAS SILAS");
+                    imprimirEstadoSala();
+                    System.out.println("POR FAVOR INGRESE NUEVAMENTE TODO EL FORMULARIO");
+                    System.out.println("DESEA COMPRAR BOLETA?"+"SI LO DESEA INGRESE 1");
+                }
+                else {
+                    System.out.println("DESEA COMPRAR BOLETA?"+"SI LO DESEA INGRESE 1");
+                    disponible=false;
+                }
+            }
+        } 
+    }
+    private void silla(){
+        Scanner sc1=new Scanner(System.in);
+        int ingresarUsuario; 
+        byte tipo1,edad;
+        String nombre;
+        String genero;
+        System.out.println("INGRESE EL NUMERO DE SILLA QUE DESEA");
+        ingresarUsuario=sc.nextInt();
+        System.out.println("INGRESE LA CLASE DE SILLA QUE DESEA, 1 SI ES GENERAL,2 SI ES PREFERENCIAL,3 SI ES EJECUTIVA"
+                + "Y 3 SI ES EJECUTIVA");
+        tipo1=sc.nextByte();
+        for (int i=0;i<filas;i++){
+            for (int j=0;j<columnas;j++){
+                if ((arraySilla[i][j].getNumero()==ingresarUsuario)&&(arraySilla[i][j].getCliente()==null)&&(arraySilla[i][j].getTipo()==tipo1)){
+                    System.out.println("LA SILLA SOLICITADA ESTA DISPONIBLE");
+                    System.out.println("INGRESE SU NOMBRE");
+                    nombre=sc1.nextLine();
+                    System.out.println("INGRESE SU EDAD");
+                    edad=sc.nextByte();
+                    System.out.println("INGRESE SU GENERO POR LETRA ES DECIR M PARA MASCULINO F PARA FEMENINO");
+                    genero=sc1.nextLine();
+                    Cliente c1= new Cliente(nombre,edad,genero);
+                    arraySilla[i][j].setCliente(c1);
+                    taquilla+=arraySilla[i][j].getCliente().getTaquilla();
+                    disponible=true;
+                    arraySilla[i][j].setEstado("OCUPADO");
+                }
+            }
+        }
+    }
+    private void imprimirEstadoSala(){
+        for (int i=0;i<filas;i++){
+            for (int j=0;j<columnas;j++){
+                System.out.print(" "+arraySilla[i][j].getEstado());
+            }
+            System.out.print("\n");
         }
     }
     public int getFilas() {

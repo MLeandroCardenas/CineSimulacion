@@ -3,10 +3,12 @@ public class Silla {
     private int numero;
     private Cliente cliente;
     private byte tipo;
-    public Silla(int numero, Cliente cliente, byte tipo) {
+    private String estado;
+    public Silla(int numero, Cliente cliente, byte tipo,String estado) {
         this.numero = numero;
         this.cliente = cliente;
         this.tipo = tipo;
+        this.estado=estado;
     }
 
     public int getNumero() {
@@ -31,6 +33,14 @@ public class Silla {
 
     public byte getTipo() {
         return tipo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
 }
