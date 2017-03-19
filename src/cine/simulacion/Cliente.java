@@ -3,7 +3,6 @@ public class Cliente {
     private String nombre;
     private int edad;
     private String genero;
-    private byte ubicacion[][];
     private int taquilla=5000;
     
     public Cliente(String nombre, int edad, String genero) {
