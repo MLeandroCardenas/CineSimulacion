@@ -10,6 +10,7 @@ public class MenuPrincipal {
     int tipoG;
     boolean disponible=false;
     int tipoE;
+    int totalAsistidos=0;
     int tipoP;
     Silla[][] arraySilla;
      public MenuPrincipal() {
@@ -24,6 +25,8 @@ public class MenuPrincipal {
        InformacionPelicula();
        IngresarClientes();
        calcularTaquilla();
+       promedioDeHombres();
+       promedioMujeres();
       }
     private void generarSala(){
         for (int i = 0; i < filas; i++) {
@@ -188,6 +191,35 @@ public class MenuPrincipal {
             }
         }
         System.out.println("LA TAQUILLA TOTAL ES:"+taquilla);
+    }
+    private void promedioDeHombres(){
+        int numeroHombres=0;
+        for (int i=0;i<filas;i++){
+            for (int j=0;j<columnas;j++){
+                if (arraySilla[i][j].getCliente()!=null){
+                    totalAsistidos++;
+                    if("M".equals(arraySilla[i][j].getCliente().getGenero())){
+                        numeroHombres++;
+                    }
+                }
+            }
+        }
+        numeroHombres=(numeroHombres*100)/totalAsistidos;
+        System.out.println("EL PROMEDIO DE HOMBRES CONSIDERANDO COMO EL 100% LAS PERSONAS QUE ASISTIERON ES DE:"+numeroHombres+"%");
+    }
+    private void promedioMujeres(){
+        int numeroMujeres=0;
+        for (int i=0;i<filas;i++){
+            for (int j=0;j<columnas;j++){
+                if (arraySilla[i][j].getCliente()!=null){
+                        if("F".equals(arraySilla[i][j].getCliente().getGenero())){
+                        numeroMujeres++;
+                    }
+                }
+            }
+        }
+        numeroMujeres=(numeroMujeres*100)/totalAsistidos;
+        System.out.println("EL PROMEDIO DE MUJERES CONSIDERANDO COMO EL 100% LAS PERSONAS QUE ASISTIERON ES DE:"+numeroMujeres+"%");
     }
     public int getFilas() {
         return filas;
