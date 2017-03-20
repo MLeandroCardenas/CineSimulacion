@@ -1,18 +1,22 @@
 package cine.simulacion;
 import java.util.Scanner;
+/**
+ * Clase encargarda de llamar e instanciar a las otras clases para la simulacion del cinema
+ * @author edgar
+ */
 public class MenuPrincipal {
     Scanner sc= new Scanner (System.in);
-    byte filas;
-    byte columnas;
+    byte filas,columnas;
     int contador;
     byte tipo=1;
     int taquilla=0;
-    int tipoG;
+    int tipoG,tipoE,tipoP;
     boolean disponible=false;
-    int tipoE;
     int totalAsistidos=0;
-    int tipoP;
     Silla[][] arraySilla;
+    /**
+     * CONSTRUCCTOR EN DONDE SE INSTANCIAN ALGUNOS OBJETOS Y LLAMA A LOS METODOS DE ESTA CLASE
+     */
      public MenuPrincipal() {
        LeerFilasColumnas filas1= new LeerFilasColumnas();
        this.filas=filas1.getFilas();
@@ -28,6 +32,9 @@ public class MenuPrincipal {
        promedioDeHombres();
        promedioMujeres();
       }
+    /**
+     * METODO EN DONDE SE INTANCIAN LOS OBJETOS PERENCIENTES AL ARRAY DE SILLAS
+     */
     private void generarSala(){
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -35,6 +42,9 @@ public class MenuPrincipal {
             } 
         }
     } 
+    /**
+     * METODO EN EL QUE SE IMPRIME LA SALA SEGUN SU CLIENTE QUE EN ESTE CASO ES NULL AL INICIO
+     */
     private void imprimirSala(){
         for (int i=0;i<filas;i++){
                 for (int j=0;j<columnas;j++){
@@ -43,6 +53,9 @@ public class MenuPrincipal {
                 System.out.print("\n");
             }
     }
+    /**
+     * METODO ENCARGADO DE LEER EL TIPO DE SILLAS SEGUN LA CANTIDAD DE FILAS SOLICITADAS
+     */
     private void definirTipoSillas(){
         System.out.println("QUE NUMERO DE FILAS DESEA GENERALES");
         tipoG=sc.nextInt();
@@ -76,6 +89,9 @@ public class MenuPrincipal {
             }
         }
     }
+    /**
+     * METODO ENCARGADO DE CAMBIAR LOS VALORES DE LOS OBJETOS SILLAS LA CANTIDAD Y TIPO DE ESTAS
+     */
     private void definirMatrizSillas(){
         for (int i=0;i<tipoG;i++){
             for (int j=0;j<columnas;j++){
@@ -95,6 +111,9 @@ public class MenuPrincipal {
             }
         }
     }
+    /**
+     * METODO ENCARGADO DE INSTACIAR LA CLASE PELICULA E IMPRIMIR INFORMACION DE LA PELICULA
+     */
     private void InformacionPelicula(){
         Pelicula pelicula= new Pelicula("COMEDIA","2013","","Mi VILLANO FAVORITO 2","120 MINUTOS... 2 HORAS");
         System.out.println("LA PELICULA DEL DIA DE HOY ES:");
@@ -103,6 +122,9 @@ public class MenuPrincipal {
         System.out.println(pelicula.getAño());
         System.out.println(pelicula.getDuracion());
     }
+    /**
+     * METODO ENCARGADO DE LEER LA INFORMACION DE LOS CLIENTES INSTACIANDO EL OBJETO CLIENTES EN EL OBJETO SILLA LLAMANDO AL METODO SILLAS
+     */
     private void IngresarClientes(){
         byte ingresarUsuario;
         System.out.println("DESEA COMPRAR BOLETA?"+"SI LO DESEA INGRESE 1"+"\nSI NO DESEA INGRESAR MAS CLIENTES INGRESE 4");
@@ -131,6 +153,9 @@ public class MenuPrincipal {
             }
         } 
     }
+    /**
+     * METODO ENCARGADO DE LEER LA SILLA DESEADA POR EL USUARIO Y GURADAR LA INFORMACION DE ESTE EN EL OBJETO SILLAS
+     */
     private void silla(){
         Scanner sc1=new Scanner(System.in);
         int ingresarUsuario; 
@@ -162,6 +187,9 @@ public class MenuPrincipal {
             }
         }
     }
+    /**
+     * METODO ENCARGADO DE IMPRIMIR EL ESTADO ACTUAL DE LA SALA
+     */
     private void imprimirEstadoSala(){
         for (int i=0;i<filas;i++){
             for (int j=0;j<columnas;j++){
@@ -170,6 +198,9 @@ public class MenuPrincipal {
             System.out.print("\n");
         }
     }
+    /**
+     * METODO ENCARGADO DE CALCULAR LA RECAUDACION TOTAL DEL CINEMA
+     */
     private void calcularTaquilla(){
         for (int i=0;i<filas;i++){
             for (int j=0;j<columnas;j++){
@@ -192,6 +223,9 @@ public class MenuPrincipal {
         }
         System.out.println("LA TAQUILLA TOTAL ES:"+taquilla);
     }
+    /**
+     * METODO ENCARGADO DE CACULAR EL PROMEDIO DE HOMBRES QUE HAN ASISTIDO AL CINEMA
+     */
     private void promedioDeHombres(){
         int numeroHombres=0;
         for (int i=0;i<filas;i++){
@@ -207,6 +241,9 @@ public class MenuPrincipal {
         numeroHombres=(numeroHombres*100)/totalAsistidos;
         System.out.println("EL PROMEDIO DE HOMBRES CONSIDERANDO COMO EL 100% LAS PERSONAS QUE ASISTIERON ES DE:"+numeroHombres+"%");
     }
+    /**
+     * METODO ENCARGADO DE CALCULAR EL PROMEDIO DE MUJERES QUE ASISTIERON AL CINEMA
+     */
     private void promedioMujeres(){
         int numeroMujeres=0;
         for (int i=0;i<filas;i++){
@@ -221,15 +258,31 @@ public class MenuPrincipal {
         numeroMujeres=(numeroMujeres*100)/totalAsistidos;
         System.out.println("EL PROMEDIO DE MUJERES CONSIDERANDO COMO EL 100% LAS PERSONAS QUE ASISTIERON ES DE:"+numeroMujeres+"%");
     }
+    /**
+     * 
+     * @return 
+     */
     public int getFilas() {
         return filas;
     }
+    /**
+     * 
+     * @param filas 
+     */
     public void setFilas(byte filas) {
         this.filas = filas;
     }
+    /**
+     * 
+     * @return 
+     */
     public int getColumnas() {
         return columnas;
     }
+    /**
+     * 
+     * @param columnas 
+     */
     public void setColumnas(byte columnas) {
         this.columnas = columnas;
     }
